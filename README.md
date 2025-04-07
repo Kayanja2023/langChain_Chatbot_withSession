@@ -59,8 +59,7 @@ langchain-chatbot-project/
 
 ### 1. Clone Repository
 ```bash
-git clone https://gitlab.com/your-username/langchain-chatbot-project.git
-cd langchain-chatbot-project
+git clone https://gitlab1a.prod.eu-west-1.aws.clickatell.com/andile.lwanga/rad-gp-c25-p-i4
 ```
 ### 2. Create and Activate Virtual Environment
 ```bash
