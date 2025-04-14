@@ -18,30 +18,47 @@ This project demonstrates the use of the **LangChain framework** to develop a co
 5. Deliver a final presentation including a live demo and summary of key takeaways.
 
 ---
+## File Structure
 ``` pycon
 langchain-chatbot-project/
-├── docs/                          # Research and technical documentation
-│   └── langchain-framework-summary.pdf
+├── chatbot.py                       # Entry point script that runs the chatbot
+│
+├── chains/                          # Contains logic for chain creation
+│   ├── conversation_chain.py        # Sets up ConversationalRetrievalChain or ConversationChain
+│   └── retrieval_config.py          # Loads vector store and OpenAI embeddings
+│
+├── memory/                          # Handles memory and persistence
+│   ├── memory_manager.py            # Initializes ConversationBufferMemory
+│   └── persistence.py               # Saves and loads long_chat_history to disk
+│
+├── prompts/                         # All prompt templates for chat style and system messages
+│   └── templates.py                 # Defines prompt templates used in the chain
+│
+├── config/                          # API key management and environment setup
+│   └── config.py                    # Loads .env and environment variables
+│
+├── data/                            # Local data storage
+│   ├── chroma/                      # Directory for persisted Chroma vector DB (if using RAG)
+│   └── history_logs.json            # Saved long-term chat history
+│
+├── docs/                            # Research and documentation
+│   ├── langchain-framework-summary.pdf
 │   └── architecture-diagram.png
 │
-├── src/                           # Source code for chatbot implementation
-│   ├── chatbot.py                 # Main chatbot application
-│   ├── chains.py                  # Custom or pre-built chain logic
-│   ├── memory.py                  # Buffer memory and conversation context
-│   └── config.py                  # API keys, environment config loaders
-│
-├── tests/                         # Unit and integration tests
-│   └── test_chatbot.py
-│
-├── presentation/                  # Presentation slides and demo materials
-│   └── langchain-demo-slides.pptx
+├── presentation/                    # Demo slide deck and presentation script
+│   ├── langchain-demo-slides.pptx
 │   └── demo-script.md
 │
-├── .env.example                   # Example environment variables
-├── .gitignore
-├── README.md                      # Project overview and setup guide
-├── requirements.txt               # Python dependencies
-└── project_reference.txt          # Assigned reference number or metadata
+├── tests/                           # Unit tests for chains, memory, etc.
+│   └── test_chatbot.py
+│
+├── .env                             # Your actual environment variables (ignored in .gitignore)
+├── .env.example                     # Example environment variable file
+├── .gitignore                       # Ensures secrets and data folders aren't pushed
+├── README.md                        # Setup, usage, and technical overview
+├── requirements.txt                 # List of Python dependencies
+└── project_reference.txt            # Metadata or reference info (RaD-GP-C25-P-I4)
+
 ```
 
 
