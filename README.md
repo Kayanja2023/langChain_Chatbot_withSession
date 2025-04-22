@@ -24,8 +24,8 @@ langchain-chatbot-project/
 ├── chatbot.py                       # Entry point script that runs the chatbot
 │
 ├── chains/                          # Contains logic for chain creation
-│   ├── conversation_chain.py        # Sets up ConversationalRetrievalChain or ConversationChain
-│   └── retrieval_config.py          # Loads vector store and OpenAI embeddings
+│   ├── __init__.py        # Sets up ConversationalRetrievalChain or ConversationChain
+│   └── conversation_chain.py          # Loads vector store and OpenAI embeddings
 │
 ├── memory/                          # Handles memory and persistence
 │   ├── memory_manager.py            # Initializes ConversationBufferMemory
