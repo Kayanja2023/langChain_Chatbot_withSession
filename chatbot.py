@@ -1,20 +1,22 @@
-from chains.conversation_chain import create_conversation_chain
-from memory.persistence import load_long_chat_history, save_long_chat_history
+# chatbot.py
+
+from chains.conversation_chain import chatbot_chain
 
 def main():
-    conversation = create_conversation_chain()
-    long_chat_history = load_long_chat_history()
+    session_id = "default"  # can be replaced with a user/session ID
+    print("\n🤖 Chatbot is ready (RunnableWithMessageHistory). Type 'exit' to quit.\n")
 
-    print("🤖 Chatbot is ready! Type 'exit' to end.")
     while True:
-        user_input = input("You: ")
-        if user_input.lower() == "exit":
-            save_long_chat_history(long_chat_history)
+        user_input = input("You: ").strip()
+        if user_input.lower() in ["exit", "quit"]:
+            print("\n👋 Goodbye!\n")
             break
-        response = conversation.predict(input=user_input)
-        print(f"Bot: {response}")
-        long_chat_history.append(("User", user_input))
-        long_chat_history.append(("AI", response))
+
+        response = chatbot_chain.invoke(
+            {"input": user_input},
+            config={"configurable": {"session_id": session_id}}
+        )
+        print(f"Bot: {response.content}\n")
 
 if __name__ == "__main__":
     main()
