@@ -1,22 +1,27 @@
-# chatbot.py
-
 from chains.conversation_chain import chatbot_chain
 
-def main():
-    session_id = "default"  # can be replaced with a user/session ID
-    print("\n🤖 Chatbot is ready (RunnableWithMessageHistory). Type 'exit' to quit.\n")
+def handle_query(user_input: str, session_id: str = "default-session") -> str:
+    """
+    Handles user input and generates a response using the LangChain pipeline.
 
-    while True:
-        user_input = input("You: ").strip()
-        if user_input.lower() in ["exit", "quit"]:
-            print("\n👋 Goodbye!\n")
-            break
+    Args:
+        user_input (str): The user's message.
+        session_id (str): A session identifier for tracking memory context.
 
-        response = chatbot_chain.invoke(
-            {"input": user_input},
-            config={"configurable": {"session_id": session_id}}
-        )
-        print(f"Bot: {response.content}\n")
+    Returns:
+        str: The chatbot's generated reply.
+    """
+    response = chatbot_chain.invoke(
+        {"input": user_input},
+        config={"configurable": {"session_id": session_id}}  # Pass required session_id
+    )
+    return response.content
+
 
 if __name__ == "__main__":
-    main()
+    print("🤖 Chatbot is ready. Type 'exit' to quit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "exit":
+            break
+        print("Bot:", handle_query(user_input))
