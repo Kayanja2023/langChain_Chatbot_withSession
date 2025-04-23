@@ -1,11 +1,10 @@
-# 0. Load Environment Variables
+# Load Environment Variables
 from dotenv import load_dotenv
 load_dotenv()
 
-""" 
-Loads environment variables at runtime from a `.env` file.
-This allows access to sensitive credentials like the OpenAI API key
-without hardcoding them into the source.
+"""
+Loads credentials and sensitive variables (e.g., OpenAI API key)
+from a local .env file into environment variables.
 """
 
 # 1. Import LangChain Modules
@@ -15,11 +14,12 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.chat_history import InMemoryChatMessageHistory
 
 """
-Imports essential LangChain components:
-- ChatOpenAI for model integration
-- ChatPromptTemplate for formatting multi-turn prompts
-- RunnableWithMessageHistory for managing in-session memory
-- InMemoryChatMessageHistory for non-persistent message tracking
+Imports LangChain components:
+- ChatOpenAI: wrapper for OpenAI's GPT model
+- ChatPromptTemplate: defines structured prompts with dynamic input
+- MessagesPlaceholder: injects prior history into prompt flow
+- RunnableWithMessageHistory: adds memory context to a chain
+- InMemoryChatMessageHistory: tracks dialogue during session
 """
 
 # 2. Prompt Template Configuration
@@ -30,10 +30,10 @@ prompt = ChatPromptTemplate.from_messages([
 ])
 
 """
-Defines the prompt structure for the conversation.
-- The system message sets the assistant’s tone and role.
-- The history placeholder injects prior user/AI messages.
-- The input placeholder dynamically inserts the current user query.
+Defines the format of the chat prompt:
+- System message defines assistant behavior.
+- `history` variable injects previous exchanges.
+- `{input}` placeholder is filled with the user's current query.
 """
 
 # 3. Language Model Initialization
@@ -43,30 +43,38 @@ llm = ChatOpenAI(
 )
 
 """
-Initializes the language model (GPT-3.5-turbo) using LangChain's ChatOpenAI wrapper.
-- Temperature is set to 0.7 for balanced creativity.
-- Abstracts OpenAI's API into a standard LangChain-compatible interface.
+Initializes GPT-3.5-turbo with moderate creativity.
 """
 
-# 4. Core Chain Composition (Prompt + LLM)
+# 4. Core Chain Composition (Prompt → LLM)
 chain = prompt | llm
 
 """
-Chains the prompt and the language model.
-This forms the base logic unit for processing input and generating AI responses.
+Chains the prompt and LLM into a runnable pipeline.
 """
 
-# 5. Runnable Chain with In-Memory Message History
+# 5. Memory Store for Session Memory
+session_store = {}
+
+def get_session_history(session_id: str):
+    """
+    Ensures the same memory object is reused for each session.
+    This allows multi-turn context retention across a session's lifetime.
+    """
+    if session_id not in session_store:
+        session_store[session_id] = InMemoryChatMessageHistory()
+    return session_store[session_id]
+
+# 6. Chatbot Chain with Session-Based Buffer Memory
 chatbot_chain = RunnableWithMessageHistory(
     runnable=chain,
-    get_session_history=lambda _: InMemoryChatMessageHistory(),
-    input_messages_key="input",
-    history_messages_key="history"
+    get_session_history=get_session_history,  # Returns memory scoped to session_id
+    input_messages_key="input",               # Must match input placeholder in prompt
+    history_messages_key="history"            # Must match MessagesPlaceholder key
 )
 
 """
-Wraps the prompt→model chain with an in-session memory manager.
-- Uses InMemoryChatMessageHistory to retain dialogue within the session.
-- Does not persist memory between sessions.
-- Requires a `session_id` to scope memory context when invoking.
+Creates a memory-enabled chatbot chain.
+- Memory is retained per session using a dictionary-based store.
+- Buffer memory is preserved during program runtime (but not persisted across restarts).
 """
