@@ -53,12 +53,12 @@ rad-gp-c25-p-i4/
 ├── prompts/
 │   └── templates.py                  # PromptTemplate for structured LLM input
 ├── test/
-│   ├── test_chatbot.py               # Unit test for chatbot input/output
+│   ├── test_templates.py             # Unit test for chatbot input/output
 │   ├── test_chatbot_main.py          # Tests CLI integration with handle_query()
-│   ├── test_chain.py                 # Validates end-to-end LangChain chain output
+│   ├── test_conversation_chain.py    # Validates end-to-end LangChain chain output
 │   ├── test_config.py                # Tests API key loading from .env
 │   ├── __init__.py
-│   └── unit_test_screenshot.png      # Screenshot of passing test output (for report)
+│   └── Coverage_Report.png            # Screenshot of coverage report
 ├── docs/
 │   ├── langChain_Framework_Research.pdf  # Formal write-up of LangChain research
 │   └── architecture.png                  # Visual diagram of LangChain system flow
