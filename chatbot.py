@@ -30,7 +30,7 @@ def handle_query(user_input: str, session_id: str = "default-session") -> str:
 if __name__ == "__main__":
     print("🤖 Chatbot is ready. Type 'exit' to quit.\n")
 
-    session_id = "user-session-001"  # 👈 Persistent ID for session memory
+    session_id = "user-session-001"  # #Persistent ID for session memory
 
     while True:
         user_input = input("You: ")
