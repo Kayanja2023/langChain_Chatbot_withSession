@@ -1,9 +1,9 @@
 
-# RaD-GP-C25-P-I4: LangChain Chatbot with Session-Based Buffer Memory
+# LangChain Chatbot with Session-Based Buffer Memory
 
 ## Project Requirements
 
-The ask for the project **[RaD-GP-C25-P-I4]** was to conduct a focused research study on the LangChain framework, examining its core components, architecture, and value in building generative AI applications. This included exploring how LangChain enables modularity, prompt structuring, and memory integration. Building on that research, the second part involved implementing a functional chatbot that demonstrates context-aware, multi-turn interactions using `ConversationBufferMemory`. The final deliverables include a research summary, system architecture diagram, working codebase, and a live presentation showcasing both findings and the chatbot in action — all submitted in a structured GitLab project.
+The ask for the project was to conduct a focused research study on the LangChain framework, examining its core components, architecture, and value in building generative AI applications. This included exploring how LangChain enables modularity, prompt structuring, and memory integration. Building on that research, the second part involved implementing a functional chatbot that demonstrates context-aware, multi-turn interactions using `ConversationBufferMemory`. The final deliverables include a research summary, system architecture diagram, working codebase, and a live presentation showcasing both findings and the chatbot in action — all submitted in a structured GitLab project.
 
 ---
 
